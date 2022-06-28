@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 const player = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case USER_EMAIL:
+  case 'USER_EMAIL':
     return {
       ...state,
     };
