@@ -22,11 +22,15 @@ export default class Login extends React.Component {
     const { history } = this.props;
     const requestToken = await fetch('https://opentdb.com/api_token.php?command=request');
     const dataToken = await requestToken.json();
-    const requestApi = await fetch(`https://opentdb.com/api.php?amount=5&token=${dataToken.token}`);
-    const dataApi = await requestApi.json();
+    // const requestApi = await fetch(`https://opentdb.com/api.php?amount=5&token=${dataToken.token}`);
+    // const dataApi = await requestApi.json();
     saveUser(dataToken.token);
     history.push('/game');
-    return dataApi;
+  }
+
+  settings = () => {
+    const { history } = this.props;
+    history.push('/settings');
   }
 
   render() {
@@ -56,6 +60,13 @@ export default class Login extends React.Component {
             onClick={ this.fetchApi }
           >
             Play
+          </button>
+          <button
+            type="button"
+            data-testid="btn-setting"
+            onClick={ this.settings }
+          >
+            Settings
           </button>
         </form>
       </div>
