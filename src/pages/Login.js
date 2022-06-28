@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { saveUser } from '../localStorage';
+import createUserState from '../Redux/actions';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   state = {
     name: '',
     email: '',
@@ -19,19 +21,21 @@ export default class Login extends React.Component {
   };
 
   fetchApi = async () => {
-    const { history } = this.props;
+    const { name, email } = this.state;
+    const { history, sendUserState } = this.props;
     const requestToken = await fetch('https://opentdb.com/api_token.php?command=request');
     const dataToken = await requestToken.json();
     // const requestApi = await fetch(`https://opentdb.com/api.php?amount=5&token=${dataToken.token}`);
     // const dataApi = await requestApi.json();
     saveUser(dataToken.token);
+    sendUserState(name, email, dataToken.token);
     history.push('/game');
-  }
+  };
 
   settings = () => {
     const { history } = this.props;
     history.push('/settings');
-  }
+  };
 
   render() {
     const { name, email, disable } = this.state;
@@ -63,7 +67,7 @@ export default class Login extends React.Component {
           </button>
           <button
             type="button"
-            data-testid="btn-setting"
+            data-testid="btn-settings"
             onClick={ this.settings }
           >
             Settings
@@ -78,4 +82,13 @@ Login.propTypes = {
   history: PropTypes.shape(() => ({
     push: PropTypes.func,
   })).isRequired,
+  sendUserState: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  sendUserState: (name,
+    gravatarEmail,
+    token) => dispatch(createUserState(name, gravatarEmail, token)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
