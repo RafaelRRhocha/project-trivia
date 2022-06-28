@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { saveUser } from '../localStorage';
 
 export default class Login extends React.Component {
   state = {
@@ -15,6 +17,17 @@ export default class Login extends React.Component {
     const finalValidation = regexValidation.test(email);
     this.setState({ email: value, disable: finalValidation });
   };
+
+  fetchApi = async () => {
+    const { history } = this.props;
+    const requestToken = await fetch('https://opentdb.com/api_token.php?command=request');
+    const dataToken = await requestToken.json();
+    const requestApi = await fetch(`https://opentdb.com/api.php?amount=5&token=${dataToken.token}`);
+    const dataApi = await requestApi.json();
+    saveUser(dataToken.token);
+    history.push('/game');
+    return dataApi;
+  }
 
   render() {
     const { name, email, disable } = this.state;
@@ -37,9 +50,10 @@ export default class Login extends React.Component {
             onChange={ this.verifyInputEmail }
           />
           <button
-            type="submit"
+            type="button"
             disabled={ !disable || name.length <= n3 }
             data-testid="btn-play"
+            onClick={ this.fetchApi }
           >
             Play
           </button>
@@ -48,3 +62,9 @@ export default class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape(() => ({
+    push: PropTypes.func,
+  })).isRequired,
+};
