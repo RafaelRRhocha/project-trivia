@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { createApiAction } from '../Redux/actions';
+import Timer from '../components/Timer';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -58,6 +59,7 @@ class Game extends React.Component {
           this.errorToken()
         ) : (
           <div>
+            <Timer />
             <h1 data-testid="question-category">{finalApi.category}</h1>
             <p data-testid="question-text">{finalApi.question}</p>
             <div data-testid="answer-options">{this.getRandomAnswers()}</div>
