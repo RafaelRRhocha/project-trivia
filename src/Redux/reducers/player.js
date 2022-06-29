@@ -1,4 +1,10 @@
-import { USER, API_REQUEST } from '../actions/actionsType';
+import {
+  USER,
+  API_REQUEST,
+  HAS_ANSWER,
+  DISABLE,
+  UPDATE_COUNT,
+} from '../actions/actionsType';
 
 const INITIAL_STATE = {
   name: '',
@@ -7,6 +13,8 @@ const INITIAL_STATE = {
   gravatarEmail: '',
   requestTokenApi: {},
   finalApi: [],
+  hasAnswer: false,
+  disable: false,
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -22,6 +30,21 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       finalApi: action.finalApi,
+    };
+  case HAS_ANSWER:
+    return {
+      ...state,
+      hasAnswer: action.hasAnswer,
+    };
+  case DISABLE:
+    return {
+      ...state,
+      disable: action.disable,
+    };
+  case UPDATE_COUNT:
+    return {
+      ...state,
+      score: state.score + action.score,
     };
   default:
     return state;
