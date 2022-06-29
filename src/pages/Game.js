@@ -4,8 +4,15 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { createApiAction } from '../Redux/actions';
 import Timer from '../components/Timer';
+import '../Css/Game.css';
+import { readUser } from '../localStorage';
+
 
 class Game extends React.Component {
+  state = {
+    hasAnswer: false,
+  }
+
   componentDidMount() {
     this.getApiRequest();
   }
@@ -28,16 +35,35 @@ class Game extends React.Component {
     filterApi(dataApi.results[randomIndex]);
   };
 
+  clickAnswers = () => {
+    const { hasAnswer } = this.state;
+    return (!hasAnswer) ? this.setState({ hasAnswer: true })
+      : this.setState({ hasAnswer: false });
+  }
+
   getRandomAnswers = () => {
     const { finalApi } = this.props;
+    const { hasAnswer } = this.state;
     const answers = finalApi.incorrect_answers
       && finalApi.incorrect_answers.map((e, i) => (
-        <button key={ i } type="button" data-testid={ `wrong-answer-${i}` }>
+        <button
+          className={ (!hasAnswer) ? 'black' : 'red' }
+          key={ i }
+          type="button"
+          data-testid={ `wrong-answer-${i}` }
+          onClick={ this.clickAnswers }
+        >
           {e}
         </button>
       ));
     const answersPush = answers && answers.push(
-      <button type="button" key="4" data-testid="correct-answer">
+      <button
+        className={ (!hasAnswer) ? 'black' : 'green' }
+        type="button"
+        key="4"
+        data-testid="correct-answer"
+        onClick={ this.clickAnswers }
+      >
         {finalApi.correct_answer}
       </button>,
     );
@@ -48,14 +74,16 @@ class Game extends React.Component {
 
   render() {
     const {
-      requestTokenApi: { response_code: response },
+      // requestTokenApi: { response_code: response },
       finalApi,
     } = this.props;
+    const tok = JSON.stringify(readUser());
+    console.log(tok);
     const n3 = 3;
     return (
       <>
         <Header />
-        {response === n3 ? (
+        {tok.length === tok.length - n3 ? (
           this.errorToken()
         ) : (
           <div>
