@@ -1,22 +1,33 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createDisableAction, createAnswerAction } from '../Redux/actions';
+import { saveTimer } from '../localStorage';
 
 class Timer extends React.Component {
   state = {
-    count: 30
-  }
+    count: 31,
+  };
 
   componentDidMount() {
+    const n1000 = 1000;
     this.timer = setInterval(() => {
-      let { count } = this.state;
+      const { count } = this.state;
       this.setState({
-        count: count -1
-      })
-    }, 1000)
+        count: count - 1,
+      });
+    }, n1000);
   }
 
   componentDidUpdate() {
-    if (this.state.count === 0) {
+    const { checkDisable, changeHasAnswer } = this.props;
+    const changeDisable = true;
+    const { count } = this.state;
+    saveTimer(count);
+    if (count === 0) {
       clearInterval(this.timer);
+      checkDisable(changeDisable);
+      changeHasAnswer(changeDisable);
     }
   }
 
@@ -26,8 +37,18 @@ class Timer extends React.Component {
       <div>
         {count}
       </div>
-    )
+    );
   }
 }
 
-export default Timer;
+Timer.propTypes = {
+  checkDisable: PropTypes.func.isRequired,
+  changeHasAnswer: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  checkDisable: (btnDisa) => dispatch(createDisableAction(btnDisa)),
+  changeHasAnswer: (answer) => dispatch(createAnswerAction(answer)),
+});
+
+export default connect(null, mapDispatchToProps)(Timer);
