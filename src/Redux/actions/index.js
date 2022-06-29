@@ -1,10 +1,13 @@
-import USER from './actionsType';
+import { USER, API_REQUEST } from './actionsType';
 
-const createUserState = (name, gravatarEmail, token) => ({
+export const createUserState = (name, gravatarEmail, requestTokenApi) => ({
   type: USER,
   name,
   gravatarEmail,
-  token,
+  requestTokenApi,
 });
 
-export default createUserState;
+export const createApiAction = (finalApi) => ({
+  type: API_REQUEST,
+  finalApi,
+});
