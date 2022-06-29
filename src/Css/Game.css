@@ -1,0 +1,11 @@
+.black {
+  border: 3px solid black;
+}
+
+.red {
+  border: 3px solid red;
+}
+
+.green {
+  border: 3px solid rgb(6, 240, 15);
+}
