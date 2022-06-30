@@ -14,13 +14,13 @@ class Feedback extends React.Component {
     history.push('/ranking');
   }
 
-  render() {
-    const { assertions } = this.props;
+  render() {  
+    const { assertions, score } = this.props;
     const n3 = 3;
     return (
       <div>
         <Header />
-        <p data-testid="feedback-text">
+         <p data-testid="feedback-text">
           {
             (assertions < n3)
               ? ('Could be better...')
@@ -28,11 +28,15 @@ class Feedback extends React.Component {
           }
 
         </p>
+        <p data-testid="feedback-total-score">{score}</p>
+        <p data-testid="feedback-total-question">{assertions}</p>
         <button
           type="button"
           data-testid="btn-play-again"
           onClick={ this.redirectLogin }
         >
+          <p data-testid="feedback-total-score">{score}</p>
+          <p data-testid="feedback-total-question">{assertions}</p>
           Play Again
         </button>
         <button
@@ -52,10 +56,13 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Feedback);
