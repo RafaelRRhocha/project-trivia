@@ -1,14 +1,35 @@
 /* stylelint-disable linebreaks */
+:root {
+
+  --background: black;
+
+  --backgroundWindow: #15172b;
+
+  --white: white;
+
+  --inputColor: #303245;
+
+  --colorPlaceholder: #65657b;
+
+  --lightBlue: #08d;
+
+  --ligthRed: #dc2f55;
+
+  --redAnswer: red;
+
+  --greenAnswer: rgb(6, 240, 15);
+}
+
 .body-login {
   align-items: center;
-  background-color: black;
+  background-color: var(--background);
   display: flex;
   height: 100vh;
   justify-content: center;
 }
 
 .form {
-  background-color: #15172b;
+  background-color: var(--backgroundWindow);
   border-radius: 20px;
   box-sizing: border-box;
   height: 500px;
@@ -17,7 +38,7 @@
 }
 
 .title {
-  color: #eee;
+  color: var(--white);
   font-family: sans-serif;
   font-size: 36px;
   font-weight: 600;
@@ -25,7 +46,7 @@
 }
 
 .subtitle {
-  color: #eee;
+  color: var(--white);
   font-family: sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -40,11 +61,11 @@
 }
 
 .input {
-  background-color: #303245;
+  background-color: var(--inputColor);
   border: 0;
   border-radius: 12px;
   box-sizing: border-box;
-  color: #eee;
+  color: var(--white);
   font-size: 18px;
   height: 100%;
   outline: 0;
@@ -53,7 +74,7 @@
 }
 
 .cut {
-  background-color: #15172b;
+  background-color: var(--backgroundWindow);
   border-radius: 10px;
   height: 20px;
   left: 20px;
@@ -73,7 +94,7 @@
 }
 
 .placeholder {
-  color: #65657b;
+  color: var(--colorPlaceholder);
   font-family: sans-serif;
   left: 20px;
   line-height: 14px;
@@ -93,7 +114,7 @@
 }
 
 .input:focus ~ .placeholder {
-  color: #dc2f55;
+  color: var(--ligthRed);
 }
 
 .btn-container {
@@ -102,11 +123,11 @@
 }
 
 .settings-btn {
-  background-color: #08d;
+  background-color: var(--lightBlue);
   border: 0;
   border-radius: 12px;
   box-sizing: border-box;
-  color: #eee;
+  color: var(--white);
   cursor: pointer;
   font-size: 18px;
   height: 50px;
@@ -117,11 +138,11 @@
 }
 
 .play-btn {
-  background-color: #dc2f55;
+  background-color: var(--ligthRed);
   border: 0;
   border-radius: 12px;
   box-sizing: border-box;
-  color: #eee;
+  color: var(--white);
   cursor: pointer;
   font-size: 18px;
   height: 50px;
@@ -132,13 +153,13 @@
 }
 
 .play-btn:hover {
-  background-color: #eee;
-  color: #dc2f55;
+  background-color: var(--white);
+  color: var(--ligthRed);
   cursor: pointer;
 }
 
 .play-btn:disabled {
-  background-color: #dc2f55;
-  color: #eee;
+  background-color: var(--ligthRed);
+  color: var(--white);
   opacity: 0.3;
 }

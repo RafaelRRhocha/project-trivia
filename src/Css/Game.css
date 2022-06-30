@@ -1,12 +1,153 @@
 /* stylelint-disable linebreaks */
-.black {
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap') ;
+
+body {
+  background-color: var(--background);
+  color: var(--white);
+  font-family: Poppins , system-ui , -apple-system , Oxygen , Ubuntu , sans-serif;
+}
+
+.game-container {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.titleGame {
+  font-size: 40px;
+  text-align: center;
+}
+
+.game p {
+  text-align: center;
+}
+
+.timer {
+  margin-top: -10px;
+  text-align: right;
+}
+
+.game {
+  align-items: center;
+  background-color: var(--backgroundWindow);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5%;
+  min-height: 350px;
+  min-width: 750px;
+  padding: 20px;
+}
+
+.btn-container {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 50px;
+}
+
+.defaultAnswer {
+  background-color: var(--white);
   border: 3px solid black;
+  border-radius: 10px;
+  color: var(--background);
+  padding: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
 }
 
-.red {
-  border: 3px solid red;
+.defaultAnswer:disabled {
+  opacity: 0.3;
 }
 
-.green {
-  border: 3px solid rgb(6, 240, 15);
+.defaultAnswer:hover {
+  background: var(--lightBlue);
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  box-shadow: 0 0 5px var(--lightBlue) , 0 0 25px var(--lightBlue) , 0
+    0 50px var(--lightBlue);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.defaultAnswer:disabled:hover {
+  background-color: var(--white);
+  -webkit-box-reflect: unset;
+  box-shadow: none;
+  color: var(--lightBlue);
+}
+
+.wrongAnswer {
+  background-color: var(--redAnswer);
+  border: 3px solid var(--redAnswer);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.wrongAnswer:disabled {
+  opacity: 0.3;
+}
+
+.wrongAnswer:hover {
+  background: var(--redAnswer);
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  box-shadow: 0 0 5px var(--redAnswer) , 0 0 25px var(--redAnswer) , 0
+    0 50px var(--redAnswer);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.wrongAnswer:disabled:hover {
+  background-color: var(--white);
+  -webkit-box-reflect: unset;
+  box-shadow: none;
+}
+
+.correctAnswer {
+  background-color: var(--greenAnswer);
+  border: 3px solid var(--greenAnswer);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.correctAnswer:disabled {
+  opacity: 0.3;
+}
+
+.correctAnswer:hover {
+  background-color: var(--greenAnswer);
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  box-shadow: 0 0 5px var(--greenAnswer) , 0 0 25px var(--greenAnswer) , 0
+    0 50px var(--greenAnswer);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.correctAnswer:disabled:hover {
+  background-color: var(--white);
+  -webkit-box-reflect: unset;
+  box-shadow: none;
+}
+
+.next-btn {
+  background-color: var(--lightBlue);
+  border: 0;
+  border-radius: 8px;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 18px;
+  height: 35px;
+  text-align: center;
+  width: 75px;
 }

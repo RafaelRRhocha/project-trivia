@@ -1,0 +1,19 @@
+/* stylelint-disable linebreaks */
+.header {
+  align-items: center;
+  background-color: var(--backgroundWindow);
+  display: flex;
+  height: 125px;
+  justify-content: space-around;
+  padding: 8px;
+}
+
+.header img {
+  border-radius: 15px;
+  height: 80px;
+  width: 80px;
+}
+
+.header p {
+  font-size: 30px;
+}

@@ -12,9 +12,19 @@ import '../Css/Game.css';
 import { readTimer, readUser } from '../localStorage';
 
 class Game extends React.Component {
+  state = {
+    index: 0,
+  };
+
   componentDidMount() {
     this.getApiRequest();
   }
+
+  decodeEntity = (formatText) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = formatText;
+    return textarea.value;
+  };
 
   errorToken = () => {
     const { history } = this.props;
@@ -27,11 +37,18 @@ class Game extends React.Component {
       requestTokenApi: { token },
       filterApi,
     } = this.props;
-    const requestApi = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const { index } = this.state;
+    const requestApi = await fetch(
+      `https://opentdb.com/api.php?amount=5&token=${token}`,
+    );
     const dataApi = await requestApi.json();
-    const n6 = 6;
-    const randomIndex = Math.floor(Math.random() * n6);
-    filterApi(dataApi.results[randomIndex]);
+    filterApi(dataApi.results[index]);
+    this.setState(({ index: i }) => ({ index: i + 1 }));
+    const n5 = 5;
+    if (index === n5) {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
   };
 
   clickAnswers = ({ target: { textContent } }) => {
@@ -45,8 +62,7 @@ class Game extends React.Component {
     if (textContent === finalApi.correct_answer) {
       sendCount(+'10' + setTimer * difficulty[finalApi.difficulty]);
     }
-    const verifyAction = true;
-    changeHasAnswer(verifyAction);
+    changeHasAnswer(true);
   };
 
   getRandomAnswers = () => {
@@ -54,7 +70,7 @@ class Game extends React.Component {
     const answers = finalApi.incorrect_answers
       && finalApi.incorrect_answers.map((e, i) => (
         <button
-          className={ !hasAnswer ? 'black' : 'red' }
+          className={ !hasAnswer ? 'defaultAnswer' : 'wrongAnswer' }
           key={ i }
           type="button"
           data-testid={ `wrong-answer-${i}` }
@@ -67,7 +83,7 @@ class Game extends React.Component {
     const answersPush = answers
       && answers.push(
         <button
-          className={ !hasAnswer ? 'black' : 'green' }
+          className={ !hasAnswer ? 'defaultAnswer' : 'correctAnswer' }
           type="button"
           key="4"
           data-testid="correct-answer"
@@ -93,26 +109,33 @@ class Game extends React.Component {
         {tok.length <= n63 || tok.length >= n67 ? (
           this.errorToken()
         ) : (
-          <div>
-            {finalApi && (
-              <>
-                <Timer />
+          <div className="game-container">
+            <div className="game">
+              {finalApi && (
                 <div>
-                  <h1 data-testid="question-category">{finalApi.category}</h1>
-                  <p data-testid="question-text">{finalApi.question}</p>
-                  <div data-testid="answer-options">{this.getRandomAnswers()}</div>
+                  <h1 data-testid="question-category" className="titleGame">
+                    {finalApi.category}
+                  </h1>
+                  <Timer />
+                  <p data-testid="question-text">
+                    {this.decodeEntity(finalApi.question)}
+                  </p>
+                  <div data-testid="answer-options" className="btn-container">
+                    {this.getRandomAnswers()}
+                  </div>
                 </div>
-              </>
-            )}
-            {hasAnswer && (
-              <button
-                type="button"
-                data-testid="btn-next"
-                onClick={ this.getApiRequest }
-              >
-                Next
-              </button>
-            )}
+              )}
+              {hasAnswer && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.getApiRequest }
+                  className="next-btn"
+                >
+                  Next
+                </button>
+              )}
+            </div>
           </div>
         )}
       </>
@@ -143,7 +166,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   filterApi: (api) => dispatch(createApiAction(api)),
   changeHasAnswer: (answer) => dispatch(createAnswerAction(answer)),
-  sendCount: (answer) => dispatch(createCountAction(answer)),
+  sendCount: (count) => dispatch(createCountAction(count)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

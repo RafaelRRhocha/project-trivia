@@ -42,8 +42,8 @@ class Login extends React.Component {
     return (
       <div className="body-login">
         <form className="form">
-          <div className="title">Bem Vindo ao Trivia!</div>
-          <div className="subtitle">Vamos Criar a sua Conta!</div>
+          <div className="title">Welcome to Trivia!</div>
+          <div className="subtitle">Lets Create Your Account!</div>
           <div className="input-container">
             <input
               type="text"

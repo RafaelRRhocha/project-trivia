@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createDisableAction, createAnswerAction } from '../Redux/actions';
 import { saveTimer } from '../localStorage';
+import '../Css/Game.css';
 
 class Timer extends React.Component {
   state = {
@@ -10,6 +11,14 @@ class Timer extends React.Component {
   };
 
   componentDidMount() {
+    this.createTimer();
+  }
+
+  componentDidUpdate() {
+    this.updateTimer();
+  }
+
+  createTimer = () => {
     const n1000 = 1000;
     this.timer = setInterval(() => {
       const { count } = this.state;
@@ -19,24 +28,23 @@ class Timer extends React.Component {
     }, n1000);
   }
 
-  componentDidUpdate() {
+  updateTimer = () => {
     const { checkDisable, changeHasAnswer } = this.props;
-    const changeDisable = true;
     const { count } = this.state;
     saveTimer(count);
     if (count === 0) {
       clearInterval(this.timer);
-      checkDisable(changeDisable);
-      changeHasAnswer(changeDisable);
+      checkDisable(true);
+      changeHasAnswer(true);
     }
   }
 
   render() {
     const { count } = this.state;
     return (
-      <div>
+      <p className="timer">
         {count}
-      </div>
+      </p>
     );
   }
 }
