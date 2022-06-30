@@ -1,4 +1,10 @@
-import { USER, API_REQUEST, HAS_ANSWER, DISABLE, UPDATE_COUNT } from './actionsType';
+import {
+  USER,
+  API_REQUEST,
+  HAS_ANSWER,
+  DISABLE,
+  UPDATE_COUNT,
+} from './actionsType';
 
 export const createUserState = (name, gravatarEmail, requestTokenApi) => ({
   type: USER,
