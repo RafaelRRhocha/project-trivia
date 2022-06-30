@@ -14,12 +14,20 @@ class Feedback extends React.Component {
     history.push('/ranking');
   }
 
-  render() {
+  render() {  
     const { assertions, score } = this.props;
+    const n3 = 3;
     return (
       <div>
         <Header />
-        <p data-testid="feedback-text">dasdasd</p>
+         <p data-testid="feedback-text">
+          {
+            (assertions < n3)
+              ? ('Could be better...')
+              : ('Well Done!')
+          }
+
+        </p>
         <p data-testid="feedback-total-score">{score}</p>
         <p data-testid="feedback-total-question">{assertions}</p>
         <button
@@ -44,6 +52,7 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
+  assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

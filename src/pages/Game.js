@@ -14,6 +14,7 @@ import { readTimer, readUser } from '../localStorage';
 class Game extends React.Component {
   state = {
     index: 0,
+    correctAnswer: 0,
   };
 
   componentDidMount() {
@@ -154,6 +155,7 @@ Game.propTypes = {
   hasAnswer: PropTypes.bool.isRequired,
   disable: PropTypes.bool.isRequired,
   sendCount: PropTypes.func.isRequired,
+  // sendAssertions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -167,6 +169,7 @@ const mapDispatchToProps = (dispatch) => ({
   filterApi: (api) => dispatch(createApiAction(api)),
   changeHasAnswer: (answer) => dispatch(createAnswerAction(answer)),
   sendCount: (count) => dispatch(createCountAction(count)),
+  // sendAssertions: (correctAnswers) => dispatch(createAssertionsAction(correctAnswers)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
