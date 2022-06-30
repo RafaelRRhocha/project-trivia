@@ -20,6 +20,8 @@ class Feedback extends React.Component {
       <div>
         <Header />
         <p data-testid="feedback-text">dasdasd</p>
+        <p data-testid="feedback-total-score">{score}</p>
+        <p data-testid="feedback-total-question">{assertions}</p>
         <button
           type="button"
           data-testid="btn-play-again"
