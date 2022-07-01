@@ -2,10 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { resetCount } from '../Redux/actions';
 
 class Feedback extends React.Component {
   redirectLogin = () => {
-    const { history } = this.props;
+    const { history, resetCountAssertions } = this.props;
+    resetCountAssertions();
     history.push('/');
   };
 
@@ -14,13 +16,13 @@ class Feedback extends React.Component {
     history.push('/ranking');
   }
 
-  render() {  
+  render() {
     const { assertions, score } = this.props;
     const n3 = 3;
     return (
       <div>
         <Header />
-         <p data-testid="feedback-text">
+        <p data-testid="feedback-text">
           {
             (assertions < n3)
               ? ('Could be better...')
@@ -35,8 +37,6 @@ class Feedback extends React.Component {
           data-testid="btn-play-again"
           onClick={ this.redirectLogin }
         >
-          <p data-testid="feedback-total-score">{score}</p>
-          <p data-testid="feedback-total-question">{assertions}</p>
           Play Again
         </button>
         <button
@@ -56,7 +56,7 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  assertions: PropTypes.number.isRequired,
+  resetCountAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
 };
 
@@ -65,4 +65,8 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
-export default connect(mapStateToProps)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  resetCountAssertions: () => dispatch(resetCount()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

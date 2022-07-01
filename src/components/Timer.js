@@ -18,6 +18,11 @@ class Timer extends React.Component {
     this.updateTimer();
   }
 
+  componentWillUnmount() {
+    this.createTimer();
+    this.updateTimer();
+  }
+
   createTimer = () => {
     const n1000 = 1000;
     this.timer = setInterval(() => {

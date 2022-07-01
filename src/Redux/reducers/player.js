@@ -4,6 +4,7 @@ import {
   HAS_ANSWER,
   DISABLE,
   UPDATE_COUNT,
+  RESET_COUNT,
 } from '../actions/actionsType';
 
 const INITIAL_STATE = {
@@ -46,6 +47,12 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       score: state.score + action.score,
       assertions: state.assertions + 1,
+    };
+  case RESET_COUNT:
+    return {
+      ...state,
+      score: 0,
+      assertions: 0,
     };
   default:
     return state;
