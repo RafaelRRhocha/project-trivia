@@ -10,6 +10,15 @@ import {
 import Timer from '../components/Timer';
 import '../Css/Game.css';
 import { readTimer, readUser } from '../localStorage';
+import {
+  decodeEntity,
+  difficulty,
+  n05,
+  n10,
+  n5,
+  n63,
+  n67,
+} from '../components/main';
 
 class Game extends React.Component {
   state = {
@@ -20,13 +29,7 @@ class Game extends React.Component {
     this.getApiRequest();
   }
 
-  decodeEntity = (formatText) => {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = formatText;
-    return textarea.value;
-  };
-
-  errorToken = () => {
+  redirectErrorToken = () => {
     const { history } = this.props;
     localStorage.removeItem('token');
     history.push('/');
@@ -36,7 +39,6 @@ class Game extends React.Component {
     const {
       requestTokenApi: { token },
       filterApi,
-      history,
     } = this.props;
     const { index } = this.state;
     const requestApi = await fetch(
@@ -44,23 +46,28 @@ class Game extends React.Component {
     );
     const dataApi = await requestApi.json();
     filterApi(dataApi.results[index]);
+  };
+
+  nextButton = () => {
+    const {
+      history,
+    } = this.props;
+    this.getApiRequest();
+    // const setTimer = readTimer();
+    // const setNewTimer = saveTimer(clearInterval(setTimer));
+    // console.log(setNewTimer);
+    const { index } = this.state;
     this.setState(({ index: i }) => ({ index: i + 1 }));
-    const n5 = 5;
     if (index === n5) {
       history.push('/feedback');
     }
-  };
+  }
 
   clickAnswers = ({ target: { textContent } }) => {
     const { changeHasAnswer, finalApi, sendCount } = this.props;
     const setTimer = readTimer();
-    const difficulty = {
-      hard: 3,
-      medium: 2,
-      easy: 1,
-    };
     if (textContent === finalApi.correct_answer) {
-      sendCount(+'10' + setTimer * difficulty[finalApi.difficulty]);
+      sendCount(+n10 + setTimer * difficulty[finalApi.difficulty]);
     }
     changeHasAnswer(true);
   };
@@ -94,20 +101,18 @@ class Game extends React.Component {
         </button>,
       );
     console.log(answersPush);
-    const randomAnswers = answers && answers.sort(() => Math.random() - +'0.5');
+    const randomAnswers = answers && answers.sort(() => Math.random() - n05);
     return randomAnswers;
   };
 
   render() {
     const { finalApi, hasAnswer } = this.props;
-    const tok = JSON.stringify(readUser());
-    const n63 = 63;
-    const n67 = 67;
+    const verifyToken = JSON.stringify(readUser());
     return (
       <>
         <Header />
-        {tok.length <= n63 || tok.length >= n67 ? (
-          this.errorToken()
+        {verifyToken.length <= n63 || verifyToken.length >= n67 ? (
+          this.redirectErrorToken()
         ) : (
           <div className="game-container">
             <div className="game">
@@ -118,7 +123,7 @@ class Game extends React.Component {
                   </h1>
                   <Timer />
                   <p data-testid="question-text">
-                    {this.decodeEntity(finalApi.question)}
+                    {decodeEntity(finalApi.question)}
                   </p>
                   <div data-testid="answer-options" className="btn-container">
                     {this.getRandomAnswers()}
@@ -129,7 +134,7 @@ class Game extends React.Component {
                 <button
                   type="button"
                   data-testid="btn-next"
-                  onClick={ this.getApiRequest }
+                  onClick={ this.nextButton }
                   className="next-btn"
                 >
                   Next

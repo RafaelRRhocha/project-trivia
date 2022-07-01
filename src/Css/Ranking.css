@@ -1,0 +1,57 @@
+/* stylelint-disable linebreaks */
+.ranking-page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.ranking-page h1 {
+  padding: 10px;
+  text-align: center;
+}
+
+.player {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-left: -230px;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 5px;
+  text-align: left;
+}
+
+.player:nth-child( 2 ) {
+  border: 1px solid goldenrod;
+  padding: 13px 0;
+}
+
+.player:nth-child( 3 ) {
+  border: 1px solid silver;
+  padding: 13px 0;
+}
+
+.player:nth-child( 4 ) {
+  border: 1px solid #cd7f32;
+  padding: 13px 0;
+}
+
+.playAgainRank {
+  background-color: var(--lightBlue);
+  border: 0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  outline: 0;
+  text-align: center;
+  width: 100px;
+}

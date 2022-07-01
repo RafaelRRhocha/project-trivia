@@ -3,28 +3,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { resetCount } from '../Redux/actions';
+import '../Css/Ranking.css';
 
 class Ranking extends React.Component {
   state = {
     ranking: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.createRanking();
+  }
+
+  createRanking = async () => {
     const { name, email, score } = this.props;
     const userEmail = md5(email).toString();
-    const objInfo = {
+    const obj = {
       name,
       score,
       picture: `https://www.gravatar.com/avatar/${userEmail}`,
     };
     const ranking = JSON.parse(localStorage.getItem('ranking'));
     if (ranking === null) {
-      localStorage.setItem('ranking', JSON.stringify([objInfo]));
+      localStorage.setItem('ranking', JSON.stringify([obj]));
     } else {
-      localStorage.setItem('ranking', JSON.stringify([...ranking, objInfo]));
+      localStorage.setItem('ranking', JSON.stringify([...ranking, obj]));
     }
-    const objUpdated = JSON.parse(localStorage.getItem('ranking'));
-    this.setState({ ranking: objUpdated });
+    const finalObj = JSON.parse(localStorage.getItem('ranking'));
+    this.setState({ ranking: finalObj });
   }
 
   redirectLogin = () => {
@@ -36,22 +41,25 @@ class Ranking extends React.Component {
   render() {
     const { ranking } = this.state;
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking page</h1>
+      <div className="ranking-page">
+        <h1 data-testid="ranking-title">Ranking</h1>
         {ranking
           && ranking.sort(
             (a, b) => parseFloat(b.score) - parseFloat(a.score),
-          ).map(({ name, score, picture }, index) => (
-            <div key={ index }>
+          ).map(({ name, score, picture }, i) => (
+            <div key={ i } className="player">
               <img src={ picture } alt={ name } />
-              <p data-testid={ `player-name-${index}` }>{name}</p>
-              <p data-testid={ `player-score-${index}` }>{score}</p>
+              <div className="player-info">
+                <p data-testid={ `player-name-${i}` }>{`Player: ${name}`}</p>
+                <p data-testid={ `player-score-${i}` }>{`Score: ${score}`}</p>
+              </div>
             </div>
           ))}
         <button
           type="button"
           data-testid="btn-go-home"
           onClick={ this.redirectLogin }
+          className="playAgainRank"
         >
           Play Again
         </button>
@@ -71,9 +79,9 @@ Ranking.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  email: state.player.gravatarEmail,
   name: state.player.name,
   score: state.player.score,
+  email: state.player.gravatarEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createDisableAction, createAnswerAction } from '../Redux/actions';
-import { saveTimer } from '../localStorage';
+import { saveTimer, readTimer } from '../localStorage';
 import '../Css/Game.css';
+import { n1000 } from './main';
 
 class Timer extends React.Component {
   state = {
@@ -24,7 +25,6 @@ class Timer extends React.Component {
   }
 
   createTimer = () => {
-    const n1000 = 1000;
     this.timer = setInterval(() => {
       const { count } = this.state;
       this.setState({
@@ -45,10 +45,10 @@ class Timer extends React.Component {
   }
 
   render() {
-    const { count } = this.state;
+    const timer = readTimer();
     return (
       <p className="timer">
-        {count}
+        {timer}
       </p>
     );
   }

@@ -58,7 +58,7 @@ class Login extends React.Component {
             />
             <div className="cut cut-short" />
             <p className="placeholder">
-              Nome
+              Name
             </p>
           </div>
           <div className="input-container">

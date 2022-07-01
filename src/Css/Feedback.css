@@ -1,0 +1,59 @@
+/* stylelint-disable linebreaks */
+.feedback {
+  display: flex;
+  justify-content: center;
+}
+
+.main-feedback {
+  align-items: center;
+  background-color: var(--backgroundWindow);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5%;
+  min-height: 350px;
+  padding: 20px;
+  width: 450px;
+}
+
+.main-feedback p {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-containerFeedback {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  margin-top: -90px;
+}
+
+.playAgain {
+  background-color: var(--lightBlue);
+  border: none;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  outline: 0;
+  text-align: center;
+  width: 100px;
+}
+
+.ranking-btn {
+  background-color: var(--ligthRed);
+  border: 0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  outline: 0;
+  text-align: center;
+  width: 100px;
+}
