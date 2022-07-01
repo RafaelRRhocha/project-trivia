@@ -12,7 +12,7 @@ class Header extends React.Component {
       <header className="header">
         <img data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${userEmail}` } alt="imagem de perfil" />
         <p data-testid="header-player-name">{`Welcome! ${name}`}</p>
-        <p data-testid="header-score">{score}</p>
+        <p data-testid="header-score">{`Score: ${score}`}</p>
       </header>
     );
   }

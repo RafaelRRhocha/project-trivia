@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createDisableAction, createAnswerAction } from '../Redux/actions';
-import { saveTimer, readTimer } from '../localStorage';
+import { saveTimer } from '../localStorage';
 import '../Css/Game.css';
 import { n1000 } from './main';
 
@@ -45,10 +45,11 @@ class Timer extends React.Component {
   }
 
   render() {
-    const timer = readTimer();
+    // const timer = readTimer();
+    const { count } = this.state;
     return (
       <p className="timer">
-        {timer}
+        {count}
       </p>
     );
   }
