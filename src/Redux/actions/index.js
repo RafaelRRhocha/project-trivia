@@ -4,6 +4,7 @@ import {
   HAS_ANSWER,
   DISABLE,
   UPDATE_COUNT,
+  RESET_COUNT,
 } from './actionsType';
 
 export const createUserState = (name, gravatarEmail, requestTokenApi) => ({
@@ -31,4 +32,8 @@ export const createDisableAction = (disable) => ({
 export const createCountAction = (count) => ({
   type: UPDATE_COUNT,
   score: count,
+});
+
+export const resetCount = () => ({
+  type: RESET_COUNT,
 });

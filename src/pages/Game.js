@@ -14,7 +14,6 @@ import { readTimer, readUser } from '../localStorage';
 class Game extends React.Component {
   state = {
     index: 0,
-    correctAnswer: 0,
   };
 
   componentDidMount() {
@@ -37,6 +36,7 @@ class Game extends React.Component {
     const {
       requestTokenApi: { token },
       filterApi,
+      history,
     } = this.props;
     const { index } = this.state;
     const requestApi = await fetch(
@@ -47,7 +47,6 @@ class Game extends React.Component {
     this.setState(({ index: i }) => ({ index: i + 1 }));
     const n5 = 5;
     if (index === n5) {
-      const { history } = this.props;
       history.push('/feedback');
     }
   };
@@ -145,17 +144,21 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
-  history: PropTypes.shape(() => ({
-    push: PropTypes.func,
-  })).isRequired,
-  requestTokenApi: PropTypes.objectOf(PropTypes.string).isRequired,
-  filterApi: PropTypes.func.isRequired,
   changeHasAnswer: PropTypes.func.isRequired,
-  finalApi: PropTypes.objectOf.isRequired,
-  hasAnswer: PropTypes.bool.isRequired,
   disable: PropTypes.bool.isRequired,
+  filterApi: PropTypes.func.isRequired,
+  finalApi: PropTypes.objectOf().isRequired,
+  hasAnswer: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  player: PropTypes.shape({
+    name: PropTypes.string,
+    gravatarEmail: PropTypes.string,
+    score: PropTypes.number,
+  }).isRequired,
+  requestTokenApi: PropTypes.objectOf(PropTypes.string).isRequired,
   sendCount: PropTypes.func.isRequired,
-  // sendAssertions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -163,6 +166,7 @@ const mapStateToProps = (state) => ({
   finalApi: state.player.finalApi,
   hasAnswer: state.player.hasAnswer,
   disable: state.player.disable,
+  player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
