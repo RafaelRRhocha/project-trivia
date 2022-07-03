@@ -11,10 +11,14 @@
 }
 
 .player {
+  border: 1px dotted white;
   display: flex;
   gap: 10px;
-  justify-content: center;
-  margin-left: -230px;
+  justify-content: flex-start;
+  margin: auto;
+  padding: 10px;
+  width: 300px;
+
 }
 
 .player-info {
@@ -26,18 +30,15 @@
 }
 
 .player:nth-child( 2 ) {
-  border: 1px solid goldenrod;
-  padding: 13px 0;
+  border: 5px solid goldenrod;
 }
 
 .player:nth-child( 3 ) {
-  border: 1px solid silver;
-  padding: 13px 0;
+  border: 3px solid silver;
 }
 
 .player:nth-child( 4 ) {
   border: 1px solid #cd7f32;
-  padding: 13px 0;
 }
 
 .playAgainRank {

@@ -6,6 +6,7 @@ import {
   createApiAction,
   createAnswerAction,
   createCountAction,
+  createDisableAction,
 } from '../Redux/actions';
 import Timer from '../components/Timer';
 import '../Css/Game.css';
@@ -51,8 +52,12 @@ class Game extends React.Component {
   nextButton = () => {
     const {
       history,
+      changeHasAnswer,
+      checkDisable,
     } = this.props;
     this.getApiRequest();
+    changeHasAnswer(false);
+    checkDisable(false);
     // const setTimer = readTimer();
     // const setNewTimer = saveTimer(clearInterval(setTimer));
     // console.log(setNewTimer);
@@ -64,20 +69,24 @@ class Game extends React.Component {
   }
 
   clickAnswers = ({ target: { textContent } }) => {
-    const { changeHasAnswer, finalApi, sendCount } = this.props;
+    const { changeHasAnswer, finalApi, checkDisable, sendCount } = this.props;
     const setTimer = readTimer();
     if (textContent === finalApi.correct_answer) {
       sendCount(+n10 + setTimer * difficulty[finalApi.difficulty]);
     }
     changeHasAnswer(true);
+    checkDisable(true);
   };
+
+  checkAnswers = (isCorrect) => (isCorrect
+    ? 'correctAnswer' : 'wrongAnswer');
 
   getRandomAnswers = () => {
     const { finalApi, hasAnswer, disable } = this.props;
     const answers = finalApi.incorrect_answers
       && finalApi.incorrect_answers.map((e, i) => (
         <button
-          className={ !hasAnswer ? 'defaultAnswer' : 'wrongAnswer' }
+          className={ !hasAnswer ? 'defaultAnswer' : this.checkAnswers(false) }
           key={ i }
           type="button"
           data-testid={ `wrong-answer-${i}` }
@@ -90,7 +99,7 @@ class Game extends React.Component {
     const answersPush = answers
       && answers.push(
         <button
-          className={ !hasAnswer ? 'defaultAnswer' : 'correctAnswer' }
+          className={ !hasAnswer ? 'defaultAnswer' : this.checkAnswers(true) }
           type="button"
           key="4"
           data-testid="correct-answer"
@@ -164,6 +173,7 @@ Game.propTypes = {
   }).isRequired,
   requestTokenApi: PropTypes.objectOf(PropTypes.string).isRequired,
   sendCount: PropTypes.func.isRequired,
+  checkDisable: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -178,7 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
   filterApi: (api) => dispatch(createApiAction(api)),
   changeHasAnswer: (answer) => dispatch(createAnswerAction(answer)),
   sendCount: (count) => dispatch(createCountAction(count)),
-  // sendAssertions: (correctAnswers) => dispatch(createAssertionsAction(correctAnswers)),
+  checkDisable: (btnDisa) => dispatch(createDisableAction(btnDisa)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
