@@ -58,9 +58,6 @@ class Game extends React.Component {
     this.getApiRequest();
     changeHasAnswer(false);
     checkDisable(false);
-    // const setTimer = readTimer();
-    // const setNewTimer = saveTimer(clearInterval(setTimer));
-    // console.log(setNewTimer);
     const { index } = this.state;
     this.setState(({ index: i }) => ({ index: i + 1 }));
     if (index === n5) {
